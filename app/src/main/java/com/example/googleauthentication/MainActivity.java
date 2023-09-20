@@ -90,5 +90,33 @@ public class MainActivity extends AppCompatActivity {
                 activityResultLauncher.launch(intent);
             }
         });
+
+        MaterialButton signOut = findViewById(R.id.signout);
+        signOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+                    @Override
+                    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                        if (firebaseAuth.getCurrentUser() == null) {
+                            googleSignInClient.signOut().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    Toast.makeText(MainActivity.this, "Signed out successfully", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(MainActivity.this, MainActivity.class));
+                                }
+                            });
+                        }
+                    }
+                });
+                FirebaseAuth.getInstance().signOut();
+            }
+        });
+
+        if (auth.getCurrentUser() != null) {
+            Glide.with(MainActivity.this).load(Objects.requireNonNull(auth.getCurrentUser()).getPhotoUrl()).into(imageView);
+            name.setText(auth.getCurrentUser().getDisplayName());
+            mail.setText(auth.getCurrentUser().getEmail());
+        }
     }
 }
