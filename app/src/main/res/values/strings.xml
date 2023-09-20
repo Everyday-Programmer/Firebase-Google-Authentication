@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Google Authentication</string>
-    <string name="client_id">998481595596-mli179lr48lapv3e7o45i9qttb1d9mkj.apps.googleusercontent.com</string>
+    <string name="client_id">PASTE_YOUR_AUTHENTICATION_CLIENT_ID_HERE</string>
 </resources>
